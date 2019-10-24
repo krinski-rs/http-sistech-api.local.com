@@ -1,0 +1,14 @@
+users_post:
+    path: /
+    controller: 'App\Controller\Users\UsersController::create'
+    methods: [POST, OPTIONS]
+    defaults:
+        _format: json
+        
+users_list:
+    path: /
+    controller: 'App\Controller\Users\UsersController::list'
+    methods: [GET, OPTIONS]
+    defaults:
+        _format: json
+        

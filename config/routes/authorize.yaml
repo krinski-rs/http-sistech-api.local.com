@@ -1,0 +1,7 @@
+authorize_get:
+    path: /
+    controller: 'App\Controller\Authorize\AuthorizeController::index'
+    methods: [GET]
+    defaults:
+        _format: json
+        

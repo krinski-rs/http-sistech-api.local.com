@@ -1,0 +1,35 @@
+App\Entity\Network\Pop:
+    type: entity
+    table: network.pop
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+        active:
+            type: boolean
+            nullable: false
+            options:
+                default: true
+        createdAt:
+            type: datetime
+            nullable: false
+            options:
+                default: now()
+            column: created_at
+        removedAt:
+            type: datetime
+            nullable: true
+            column: removed_at
+    lifecycleCallbacks: {  }

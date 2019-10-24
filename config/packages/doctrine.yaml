@@ -1,0 +1,82 @@
+parameters:
+    # Adds a fallback DATABASE_URL if the env var is not set.
+    # This allows you to run cache:warmup even if your
+    # environment variables are not available yet.
+    # You should not need to change this value.
+    env(DATABASE_URL): ''
+
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                driver:   '%env(resolve:DATABASE_DRIVER)%'
+                host:     '%env(resolve:DATABASE_HOST)%'
+                port:     '%env(resolve:DATABASE_PORT)%'
+                dbname:   '%env(resolve:DATABASE_DBNAME)%'
+                user:     '%env(resolve:DATABASE_USER)%'
+                password: '%env(resolve:DATABASE_PASSWORD)%'
+                server_version: '%env(resolve:DATABASE_VERSION)%'
+                charset: '%env(resolve:DATABASE_CHARSET)%'
+                mapping_types:
+                    status_vlan: string
+                    marca_switch: string
+                    port_type: string
+                    port_mode: string
+            authorize:
+                driver:   '%env(resolve:DATABASE_DRIVER)%'
+                host:     '%env(resolve:DATABASE_HOST)%'
+                port:     '%env(resolve:DATABASE_PORT)%'
+                dbname:   '%env(resolve:DATABASE_DBNAME)%'
+                user:     '%env(resolve:DATABASE_USER)%'
+                password: '%env(resolve:DATABASE_PASSWORD)%'
+                server_version: '%env(resolve:DATABASE_VERSION)%'
+                schema_filter: '%env(resolve:AUTHORIZATION_SCHEMA)%'
+                charset: '%env(resolve:DATABASE_CHARSET)%'
+            network:
+                driver:   '%env(resolve:DATABASE_DRIVER)%'
+                host:     '%env(resolve:DATABASE_HOST)%'
+                port:     '%env(resolve:DATABASE_PORT)%'
+                dbname:   '%env(resolve:DATABASE_DBNAME)%'
+                user:     '%env(resolve:DATABASE_USER)%'
+                password: '%env(resolve:DATABASE_PASSWORD)%'
+                server_version: '%env(resolve:DATABASE_VERSION)%'
+                schema_filter: '%env(resolve:NETWORK_SCHEMA)%'
+                charset: '%env(resolve:DATABASE_CHARSET)%'
+                mapping_types:
+                    status_vlan: string
+                    marca_switch: string
+                    port_type: string
+                    port_mode: string
+    orm:
+        default_entity_manager: default
+        auto_generate_proxy_classes: '%kernel.debug%'
+        entity_managers:
+            default:
+                connection: default
+                mappings:
+                    App:
+                        is_bundle: false
+                        type: yml
+                        dir: '%kernel.project_dir%/config/mappings'
+                        prefix: 'App\Entity'
+                        alias: AppEntity
+            authorize:
+                connection: authorize
+                mappings:
+                    App:
+                        is_bundle: false
+                        type: yml
+                        dir: '%kernel.project_dir%/config/mappings'
+                        prefix: 'App\Entity'
+                        alias: AppEntity
+            network:
+                connection: network
+                mappings:
+                    App:
+                        is_bundle: false
+                        type: yml
+                        dir: '%kernel.project_dir%/config/mappings'
+                        prefix: 'App\Entity'
+                        alias: AppEntity
+                        

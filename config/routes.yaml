@@ -1,0 +1,9 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+authorize:
+    prefix: /auth
+    resource: './routes/authorize.yaml'
+users:
+    prefix: /users
+    resource: './routes/users.yaml'

@@ -1,0 +1,97 @@
+App\Entity\Network\SwitchPort:
+    type: entity
+    table: network.switch_port
+    indexes:
+        IDX_3B86D12CBE2FFB85:
+            columns:
+                - switch_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        vlanId:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: vlan_id
+        numbering:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+        adminStatus:
+            type: string
+            nullable: true
+            length: 15
+            options:
+                fixed: false
+            column: admin_status
+        operStatus:
+            type: string
+            nullable: true
+            length: 15
+            options:
+                fixed: false
+            column: oper_status
+        autoNeg:
+            type: boolean
+            nullable: false
+            options:
+                default: true
+            column: auto_neg
+        speed:
+            type: string
+            nullable: true
+            length: 15
+            options:
+                fixed: false
+        duplex:
+            type: string
+            nullable: true
+            length: 15
+            options:
+                fixed: false
+        flowCtrl:
+            type: boolean
+            nullable: false
+            options:
+                default: false
+            column: flow_ctrl
+        destiny:
+            type: string
+            nullable: true
+            length: 100
+            options:
+                fixed: false
+        type:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+        mode:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+                default: ACCESS
+    manyToOne:
+        switch:
+            targetEntity: App\Entity\Network\Switchs
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                switch_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

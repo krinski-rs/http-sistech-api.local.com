@@ -1,0 +1,12 @@
+services:
+    users_service:
+        alias: App\Services\Users
+        public: true
+
+    App\Services\Users:
+        public: false
+        arguments: ["@logger", "@doctrine"]
+          
+    App\Controller\Users\UsersController:
+        arguments: ["@user_service"]
+          

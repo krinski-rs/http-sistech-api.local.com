@@ -1,0 +1,41 @@
+App\Entity\Network\SwitchModelPort:
+    type: entity
+    table: network.switch_model_port
+    indexes:
+        IDX_9BB861F45BC0921E:
+            columns:
+                - switch_model_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        portType:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+            column: port_type
+        quantities:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+    manyToOne:
+        switchModel:
+            targetEntity: App\Entity\Network\SwitchModel
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                switch_model_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

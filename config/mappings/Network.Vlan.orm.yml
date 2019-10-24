@@ -1,0 +1,62 @@
+App\Entity\Network\Vlan:
+    type: entity
+    table: network.vlan
+    indexes:
+        IDX_47DE0EA9ED5CA9E6:
+            columns:
+                - service_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        tagId:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            column: tag_id
+        description:
+            type: string
+            nullable: false
+            length: 500
+            options:
+                fixed: false
+        status:
+            type: string
+            nullable: false
+            length: null
+            options:
+                fixed: false
+        active:
+            type: boolean
+            nullable: false
+            options:
+                default: true
+        createdAt:
+            type: datetime
+            nullable: false
+            options:
+                default: now()
+            column: created_at
+        removedAt:
+            type: datetime
+            nullable: true
+            column: removed_at
+    manyToOne:
+        service:
+            targetEntity: App\Entity\Network\Service
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                service_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

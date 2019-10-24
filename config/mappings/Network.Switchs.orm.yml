@@ -1,0 +1,102 @@
+App\Entity\Network\Switchs:
+    type: entity
+    table: network.switchs
+    indexes:
+        IDX_CC44F87253BDF040:
+            columns:
+                - pop_id
+        IDX_CC44F8725BC0921E:
+            columns:
+                - switch_model_id
+        IDX_CC44F8728B4937A1:
+            columns:
+                - vlan_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+        active:
+            type: boolean
+            nullable: false
+            options:
+                default: true
+        createdAt:
+            type: datetime
+            nullable: false
+            options:
+                default: now()
+            column: created_at
+        removedAt:
+            type: datetime
+            nullable: true
+            column: removed_at
+        addressIpv4:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+            column: address_ipv4
+        addressIpv6:
+            type: string
+            nullable: true
+            length: null
+            options:
+                fixed: false
+            column: address_ipv6
+        username:
+            type: string
+            nullable: true
+            length: 50
+            options:
+                fixed: false
+        password:
+            type: string
+            nullable: true
+            length: 50
+            options:
+                fixed: false
+    manyToOne:
+        pop:
+            targetEntity: App\Entity\Network\Pop
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                pop_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        switchModel:
+            targetEntity: App\Entity\Network\SwitchModel
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                switch_model_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        vlan:
+            targetEntity: App\Entity\Network\Vlan
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                vlan_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
