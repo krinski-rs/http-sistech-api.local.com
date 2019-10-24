@@ -7,3 +7,6 @@ authorize:
 users:
     prefix: /users
     resource: './routes/users.yaml'
+service:
+    prefix: /service
+    resource: './routes/service.yaml'

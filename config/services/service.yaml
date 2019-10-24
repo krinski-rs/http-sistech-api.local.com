@@ -1,0 +1,9 @@
+services:
+    services.service:
+          alias: App\Services\Service
+          public: true
+    App\Services\Service:
+          public: false
+          arguments: ["@doctrine", "@logger"]
+    App\Controller\Service\ServiceController:
+        arguments: ['@services.service']
