@@ -1,5 +1,5 @@
 <?php
-namespace App\Services\Service;
+namespace App\Services\SwitchModel;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 class Listing
@@ -11,12 +11,12 @@ class Listing
         $this->objEntityManager = $objEntityManager;
     }
     
-    public function get(int $idService)
+    public function get(int $idSwitchModel)
     {
         try {
-            $objRepositoryService = $this->objEntityManager->getRepository('AppEntity:Network\Service');
-            $objService = $objRepositoryService->find($idService);
-            return $objService;
+            $objRepositorySwitchModel = $this->objEntityManager->getRepository('AppEntity:Network\SwitchModel');
+            $objSwitchModel = $objRepositorySwitchModel->find($idSwitchModel);
+            return $objSwitchModel;
         } catch (\RuntimeException $e){
             throw $e;
         } catch (\Exception $e){
@@ -27,36 +27,36 @@ class Listing
     public function list(Request $objRequest)
     {
         try {
-            $objRepositoryService = $this->objEntityManager->getRepository('AppEntity:Network\Service');
+            $objRepositorySwitchModel = $this->objEntityManager->getRepository('AppEntity:Network\SwitchModel');
             $criteria = [];
-            $arrayService = [];
+            $arraySwitchModel = [];
             
-            $objQueryBuilder = $objRepositoryService->createQueryBuilder('serv');
-            $objExprEq = $objQueryBuilder->expr()->isNull('serv.removalDate');
+            $objQueryBuilder = $objRepositorySwitchModel->createQueryBuilder('switmode');
+            $objExprEq = $objQueryBuilder->expr()->isNull('switmode.removalDate');
             $objQueryBuilder->andWhere($objExprEq);
             
             if($objRequest->get('name', false)){
-                $objExprLike = $objQueryBuilder->expr()->like('serv.name', ':name');
+                $objExprLike = $objQueryBuilder->expr()->like('switmode.name', ':name');
                 $objQueryBuilder->andWhere($objExprLike);
                 $criteria['name'] = "%{$objRequest->get('name', null)}%";
             }
             
-            if($objRequest->get('nickname', false)){
-                $objExprLike = $objQueryBuilder->expr()->like('serv.nickname', ':nickname');
-                $objQueryBuilder->andWhere($objExprLike);
-                $criteria['nickname'] = "%{$objRequest->get('nickname', null)}%";
+            if($objRequest->get('brand', false)){
+                $objExprEq = $objQueryBuilder->expr()->eq('switmode.brand', ':brand');
+                $objQueryBuilder->andWhere($objExprEq);
+                $criteria['brand'] = $objRequest->get('brand', null);
             }
             
             if($objRequest->get('isActive', false)){
-                $objExprEq = $objQueryBuilder->expr()->eq('serv.isActive', ':isActive');
+                $objExprEq = $objQueryBuilder->expr()->eq('switmode.isActive', ':isActive');
                 $objQueryBuilder->andWhere($objExprEq);
                 $criteria['isActive'] = $objRequest->get('isActive', null);
             }
             
-            if($objRequest->get('recordingDate', false)){
-                $objExprEq = $objQueryBuilder->expr()->eq('serv.recordingDate', ':recordingDate');
+            if($objRequest->get('createdAt', false)){
+                $objExprEq = $objQueryBuilder->expr()->eq('switmode.createdAt', ':createdAt');
                 $objQueryBuilder->andWhere($objExprEq);
-                $criteria['removalDate'] = $objRequest->get('recordingDate', null);
+                $criteria['createdAt'] = $objRequest->get('createdAt', null);
             }
             
             if(count($criteria)){
@@ -68,18 +68,20 @@ class Listing
             
             $objQueryBuilder->setFirstResult($offset);
             $objQueryBuilder->setMaxResults($limit);
-            $objQueryBuilder->addOrderBy('serv.id', 'ASC');
+            $objQueryBuilder->addOrderBy('switmode.id', 'ASC');
             
-            $arrayService['data'] = $objQueryBuilder->getQuery()->getResult();
+            
+            $arraySwitchModel['data'] = $objQueryBuilder->getQuery()->getResult();
             $objQueryBuilder->resetDQLPart('orderBy');
-            $objQueryBuilder->select('count(serv.id) AS total');
+            $objQueryBuilder->select('count(switmode.id) AS total');
             $objQueryBuilder->setFirstResult(0);
             $objQueryBuilder->setMaxResults(1);
             $resultSet = $objQueryBuilder->getQuery()->getResult();
-            $arrayService['total'] = $resultSet[0]['total'];
-            $arrayService['offset'] = (integer)$objRequest->get('offset',0);
-            $arrayService['limit'] = (integer)$objRequest->get('limit',15);
-            return $arrayService;
+            $arraySwitchModel['total'] = $resultSet[0]['total'];
+            $arraySwitchModel['offset'] = (integer)$objRequest->get('offset',0);
+            $arraySwitchModel['limit'] = (integer)$objRequest->get('limit',15);
+            
+            return $arraySwitchModel;
         } catch (\RuntimeException $e){
             throw $e;
         } catch (\Exception $e){

@@ -6,6 +6,8 @@
 imports:
     - { resource: './services/users.yaml' }
     - { resource: './services/service.yaml' }
+    - { resource: './services/pop.yaml' }
+    - { resource: './services/switchmodel.yaml' }
 parameters:
     cors:
         allowed_origin:

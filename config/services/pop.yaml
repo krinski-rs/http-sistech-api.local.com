@@ -1,0 +1,9 @@
+services:
+    services.pop:
+          alias: App\Services\Pop
+          public: true
+    App\Services\Pop:
+          public: false
+          arguments: ["@doctrine", "@logger"]
+    App\Controller\Pop\PopController:
+        arguments: ['@services.pop', '@logger']

@@ -8,11 +8,11 @@ class Switchs
 
     private $name;
 
-    private $active;
+    private $isActive;
 
-    private $createdAt;
+    private $recordingDate;
 
-    private $removedAt;
+    private $removalDate;
 
     private $addressIpv4;
 
@@ -45,38 +45,38 @@ class Switchs
         return $this;
     }
 
-    public function getActive(): ?bool
+    public function getIsActive(): ?bool
     {
-        return $this->active;
+        return $this->isActive;
     }
 
-    public function setActive(bool $active): self
+    public function setIsActive(bool $isActive): self
     {
-        $this->active = $active;
+        $this->isActive = $isActive;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getRecordingDate(): ?\DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->recordingDate;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setRecordingDate(\DateTimeInterface $recordingDate): self
     {
-        $this->createdAt = $createdAt;
+        $this->recordingDate = $recordingDate;
 
         return $this;
     }
 
-    public function getRemovedAt(): ?\DateTimeInterface
+    public function getRemovalDate(): ?\DateTimeInterface
     {
-        return $this->removedAt;
+        return $this->removalDate;
     }
 
-    public function setRemovedAt(?\DateTimeInterface $removedAt): self
+    public function setRemovalDate(?\DateTimeInterface $removalDate): self
     {
-        $this->removedAt = $removedAt;
+        $this->removalDate = $removalDate;
 
         return $this;
     }

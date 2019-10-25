@@ -10,3 +10,9 @@ users:
 service:
     prefix: /service
     resource: './routes/service.yaml'
+pop:
+    prefix: /pop
+    resource: './routes/pop.yaml'
+switch_model:
+    prefix: /switchmodel
+    resource: './routes/switchmodel.yaml'

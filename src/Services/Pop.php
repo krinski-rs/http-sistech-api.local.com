@@ -1,16 +1,16 @@
 <?php
 namespace App\Services;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpFoundation\Request;
-use App\Services\Service\Listing;
 use App\Entity\Network\Service as EntityService;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use App\Services\Service\Create;
+use App\Services\Pop\Create;
+use App\Services\Pop\Listing;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Psr\Log\LoggerInterface;
-class Service
+class Pop
 {
     private $objEntityManager   = NULL;
     private $objLogger          = NULL;
@@ -39,13 +39,13 @@ class Service
     {
         try {
             $objCreate = new Create($this->objEntityManager, $this->objLogger);
-            $objService = $objCreate
+            $objTemplate = $objCreate
                 ->create($objRequest)
                 ->save();
             
-            $objGetSetMethodNormalizer = new GetSetMethodNormalizer(null, null, null, null, null, $this->getDefaultContext());
+            $objGetSetMethodNormalizer = new GetSetMethodNormalizer(NULL, NULL, NULL, NULL, NULL, $this->getDefaultContext());
             $objSerializer = new Serializer([$objGetSetMethodNormalizer]);
-            return $objSerializer->normalize($objService);
+            return $objSerializer->normalize($objTemplate);
         } catch (\RuntimeException $e){
             throw $e;
         } catch (\Exception $e){
@@ -63,7 +63,7 @@ class Service
                 throw new NotFoundHttpException("Not Found");
             }
             
-            $objGetSetMethodNormalizer = new GetSetMethodNormalizer(null, null, null, null, null, $this->getDefaultContext());
+            $objGetSetMethodNormalizer = new GetSetMethodNormalizer(NULL, NULL, NULL, NULL, NULL, $this->getDefaultContext());
             $objSerializer = new Serializer([$objGetSetMethodNormalizer]);
             return $objSerializer->normalize($objService);
         } catch (\RuntimeException $e){
@@ -77,14 +77,15 @@ class Service
     {
         try {
             $objListing = new Listing($this->objEntityManager);
-            $arrayService = $objListing->list($objRequest);
-            if(!count($arrayService)){
+            $arrayTemplate = $objListing->list($objRequest);
+            $this->objLogger->error("teste", ['jdjdjd'=>12313]);
+            if(!count($arrayTemplate)){
                 throw new NotFoundHttpException("Not Found");
             }
             
-            $objGetSetMethodNormalizer = new GetSetMethodNormalizer(null, null, null, null, null, $this->getDefaultContext());
+            $objGetSetMethodNormalizer = new GetSetMethodNormalizer(NULL, NULL, NULL, NULL, NULL, $this->getDefaultContext());
             $objSerializer = new Serializer([$objGetSetMethodNormalizer]);
-            return $objSerializer->normalize($arrayService);
+            return $objSerializer->normalize($arrayTemplate);
         } catch (\RuntimeException $e){
             throw $e;
         } catch (\Exception $e){

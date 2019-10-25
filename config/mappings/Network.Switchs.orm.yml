@@ -27,21 +27,22 @@ App\Entity\Network\Switchs:
             length: 100
             options:
                 fixed: false
-        active:
+        isActive:
             type: boolean
             nullable: false
             options:
                 default: true
-        createdAt:
+            column: is_active
+        recordingDate:
             type: datetime
             nullable: false
             options:
                 default: now()
-            column: created_at
-        removedAt:
+            column: recording_date
+        removalDate:
             type: datetime
             nullable: true
-            column: removed_at
+            column: removal_date
         addressIpv4:
             type: string
             nullable: true
