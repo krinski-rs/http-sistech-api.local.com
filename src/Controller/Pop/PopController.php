@@ -26,9 +26,9 @@ class PopController extends AbstractController
             $retorno = $this->objPop->create($objRequest);
             return new JsonResponse($retorno, Response::HTTP_OK);
         } catch (\RuntimeException $e) {
-            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
+            return new JsonResponse(['message'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
         } catch (\Exception $e) {
-            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse(['message'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
     
@@ -43,9 +43,9 @@ class PopController extends AbstractController
         } catch (NotFoundHttpException $e) {
             return new JsonResponse(NULL, Response::HTTP_NOT_FOUND);
         } catch (\RuntimeException $e) {
-            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
+            return new JsonResponse(['message'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
         } catch (\Exception $e) {
-            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse(['message'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
     
@@ -60,9 +60,9 @@ class PopController extends AbstractController
         } catch (NotFoundHttpException $e) {
             return new JsonResponse(NULL, Response::HTTP_NOT_FOUND);
         } catch (\RuntimeException $e) {
-            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
+            return new JsonResponse(['message'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
         } catch (\Exception $e) {
-            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse(['message'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
     

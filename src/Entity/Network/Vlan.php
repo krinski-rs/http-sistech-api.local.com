@@ -49,12 +49,12 @@ class Vlan
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus()
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): self
+    public function setStatus($status): self
     {
         $this->status = $status;
 

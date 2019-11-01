@@ -32,10 +32,10 @@ abstract class AbstractEnumType extends Type
         if (null === $value) {
             return null;
         }
-        if (!array_key_exists($value, static::$choices)) {
+        if (!in_array($value, static::$choices)) {
             throw new \InvalidArgumentException(sprintf('Invalid value "%s" for ENUM "%s".', $value, $this->getName()));
         }
-        return static::$choices[$value];
+        return $value;
     }
     
     /**

@@ -29,7 +29,7 @@ class Create
             $quantities = (integer)$objRequest->get('port10Ge');
             if($quantities > 0){
                 $objSwitchModelPort = new SwitchModelPort();
-                $objSwitchModelPort->setPortType(3);
+                $objSwitchModelPort->setPortType('GE10');
                 $objSwitchModelPort->setQuantities($quantities);
                 $this->objSwitchModel->addSwitchModelPort($objSwitchModelPort);
             }
@@ -37,7 +37,7 @@ class Create
             $quantities = (integer)$objRequest->get('portGe');
             if($quantities > 0){
                 $objSwitchModelPort = new SwitchModelPort();
-                $objSwitchModelPort->setPortType(2);
+                $objSwitchModelPort->setPortType('GE');
                 $objSwitchModelPort->setQuantities($quantities);
                 $this->objSwitchModel->addSwitchModelPort($objSwitchModelPort);
             }
@@ -45,7 +45,7 @@ class Create
             $quantities = (integer)$objRequest->get('portFe');
             if($quantities > 0){
                 $objSwitchModelPort = new SwitchModelPort();
-                $objSwitchModelPort->setPortType(1);
+                $objSwitchModelPort->setPortType('FE');
                 $objSwitchModelPort->setQuantities($quantities);
                 $this->objSwitchModel->addSwitchModelPort($objSwitchModelPort);
             }
@@ -60,12 +60,12 @@ class Create
     public function create(Request $objRequest)
     {
         try {
-            $choice = MarcaSwitchType::getChoices();
+            $this->objLogger->error("BRAND", [$objRequest->get('brand')]);
             $this->validate($objRequest);
             $this->objSwitchModel = new SwitchModel();
-            $this->objSwitchModel->setActive(TRUE);
+            $this->objSwitchModel->setIsActive($objRequest->get('isActive'));
             $this->objSwitchModel->setName($objRequest->get('name'));
-            $this->objSwitchModel->setBrand($choice[$objRequest->get('brand')]);
+            $this->objSwitchModel->setBrand($objRequest->get('brand'));
             $this->objSwitchModel->setRecordingDate(new \DateTime());
             $this->objSwitchModel->setRemovalDate(NULL);
             $this->addSwitchModelPort($objRequest);
@@ -80,9 +80,8 @@ class Create
     private function validate(Request $objRequest)
     {
         $objNotNull = new Assert\NotNull();
-        $objNotNull->message = 'Esse valor não deve ser nulo.';
         $objNotBlank = new Assert\NotBlank();
-        $objNotBlank->message = 'Esse valor não deve estar em branco.';
+        $objTypeBool = new Assert\Type(['type'=>'bool']);
         
         $objLength = new Assert\Length(
             [
@@ -115,6 +114,12 @@ class Create
                             $objLength
                         ]
                     ),
+                    'isActive' => new Assert\Required(
+                        [
+                            $objNotNull,
+                            $objTypeBool
+                        ]
+                    ),
                     'brand' => new Assert\Required( [
                             $objNotNull,
                             $objNotBlank,
@@ -125,6 +130,7 @@ class Create
             ]
         );
         $data = [
+            'isActive'  => $objRequest->get('isActive', NULL),
             'name'  => trim($objRequest->get('name', NULL)),
             'brand' => trim($objRequest->get('brand', NULL))
         ];

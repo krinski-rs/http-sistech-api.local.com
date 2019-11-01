@@ -1,7 +1,7 @@
 <?php
 namespace App\Services;
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Network\Service as EntityService;
+use App\Entity\Network\SwitchModel as EntitySwitchModel;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
@@ -31,6 +31,22 @@ class SwitchModel
                 },
                 'removalDate' => function ($dateTime) {
                     return $dateTime instanceof \DateTime ? $dateTime->format(\DateTime::ISO8601) : '';
+                },
+                'switchModelPort' => function ($objswitchModelPort) {
+                    $retorno = [];
+                    if(!$objswitchModelPort->count()){
+                        return $retorno;
+                    }
+                    $objswitchModelPort->first();
+                    while ($obj = $objswitchModelPort->current()){
+                        $retorno[$obj->getPortType()] = [
+                            'id' => $obj->getId(),
+                            'portType' => $obj->getPortType(),
+                            'quantities' => $obj->getQuantities()
+                        ];
+                        $objswitchModelPort->next();
+                    }
+                    return $retorno;
                 }
             ],
         ];
@@ -40,13 +56,13 @@ class SwitchModel
     {
         try {
             $objCreate = new Create($this->objEntityManager, $this->objLogger);
-            $objTemplate = $objCreate
+            $objSwitchModel = $objCreate
                 ->create($objRequest)
                 ->save();
             
             $objGetSetMethodNormalizer = new GetSetMethodNormalizer(NULL, NULL, NULL, NULL, NULL, $this->getDefaultContext());
             $objSerializer = new Serializer([$objGetSetMethodNormalizer]);
-            return $objSerializer->normalize($objTemplate);
+            return $objSerializer->normalize($objSwitchModel);
         } catch (\RuntimeException $e){
             throw $e;
         } catch (\Exception $e){
@@ -54,19 +70,19 @@ class SwitchModel
         }
     }
     
-    public function get(int $idService)
+    public function get(int $id)
     {
         try {
             $objListing = new Listing($this->objEntityManager);
-            $objService = $objListing->get($idService);
+            $objSwitchModel = $objListing->get($id);
             
-            if(!($objService instanceof EntityService)){
+            if(!($objSwitchModel instanceof EntitySwitchModel)){
                 throw new NotFoundHttpException("Not Found");
             }
             
             $objGetSetMethodNormalizer = new GetSetMethodNormalizer(NULL, NULL, NULL, NULL, NULL, $this->getDefaultContext());
             $objSerializer = new Serializer([$objGetSetMethodNormalizer]);
-            return $objSerializer->normalize($objService);
+            return $objSerializer->normalize($objSwitchModel);
         } catch (\RuntimeException $e){
             throw $e;
         } catch (\Exception $e){

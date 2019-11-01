@@ -16,3 +16,7 @@ pop:
 switch_model:
     prefix: /switchmodel
     resource: './routes/switchmodel.yaml'
+switchs:
+    prefix: /switchs
+    resource: './routes/switchs.yaml'
+    

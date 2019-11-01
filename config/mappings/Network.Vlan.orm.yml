@@ -28,11 +28,8 @@ App\Entity\Network\Vlan:
             options:
                 fixed: false
         status:
-            type: string
+            type: network.status_vlan
             nullable: false
-            length: null
-            options:
-                fixed: false
         isActive:
             type: boolean
             nullable: false

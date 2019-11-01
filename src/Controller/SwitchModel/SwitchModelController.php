@@ -24,9 +24,9 @@ class SwitchModelController extends AbstractController
             $retorno = $this->objSwitchModel->getBrand($objRequest);
             return new JsonResponse($retorno, Response::HTTP_OK);
         } catch (\RuntimeException $e) {
-            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
+            return new JsonResponse(['message'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
         } catch (\Exception $e) {
-            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse(['message'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
     
@@ -39,26 +39,26 @@ class SwitchModelController extends AbstractController
             $retorno = $this->objSwitchModel->create($objRequest);
             return new JsonResponse($retorno, Response::HTTP_OK);
         } catch (\RuntimeException $e) {
-            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
+            return new JsonResponse(['message'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
         } catch (\Exception $e) {
-            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse(['message'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
     
-    public function getSwitchModel(Request $objRequest, int $idSwitchModel)
+    public function getSwitchModel(Request $objRequest, int $id)
     {
         try {
             if(!$this->objSwitchModel instanceof SwitchModel){
                 return new JsonResponse(['message'=> 'Class "App\Services\SwitchModel not found."'], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
-            $objSwitchModel = $this->objSwitchModel->get($idSwitchModel);
+            $objSwitchModel = $this->objSwitchModel->get($id);
             return new JsonResponse($objSwitchModel, Response::HTTP_OK);
         } catch (NotFoundHttpException $e) {
             return new JsonResponse(NULL, Response::HTTP_NOT_FOUND);
         } catch (\RuntimeException $e) {
-            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
+            return new JsonResponse(['message'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
         } catch (\Exception $e) {
-            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse(['message'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
     
@@ -73,9 +73,9 @@ class SwitchModelController extends AbstractController
         } catch (NotFoundHttpException $e) {
             return new JsonResponse(NULL, Response::HTTP_NOT_FOUND);
         } catch (\RuntimeException $e) {
-            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
+            return new JsonResponse(['message'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
         } catch (\Exception $e) {
-            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new JsonResponse(['message'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
     

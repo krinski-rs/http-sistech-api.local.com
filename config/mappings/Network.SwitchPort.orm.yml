@@ -71,20 +71,15 @@ App\Entity\Network\SwitchPort:
             options:
                 fixed: false
         type:
-            type: string
+            type: network.port_type
             nullable: false
-            length: null
-            options:
-                fixed: false
         mode:
-            type: string
+            type: network.port_mode
             nullable: false
-            length: null
             options:
-                fixed: false
                 default: ACCESS
     manyToOne:
-        switch:
+        switchs:
             targetEntity: App\Entity\Network\Switchs
             cascade: {  }
             fetch: LAZY

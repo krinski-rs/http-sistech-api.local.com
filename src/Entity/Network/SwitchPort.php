@@ -28,7 +28,7 @@ class SwitchPort
 
     private $mode;
 
-    private $switch;
+    private $switchs;
 
     public function getId(): ?int
     {
@@ -143,38 +143,38 @@ class SwitchPort
         return $this;
     }
 
-    public function getType(): ?string
+    public function getType()
     {
         return $this->type;
     }
 
-    public function setType(string $type): self
+    public function setType($type): self
     {
         $this->type = $type;
 
         return $this;
     }
 
-    public function getMode(): ?string
+    public function getMode()
     {
         return $this->mode;
     }
 
-    public function setMode(string $mode): self
+    public function setMode($mode): self
     {
         $this->mode = $mode;
 
         return $this;
     }
 
-    public function getSwitch(): ?Switchs
+    public function getSwitchs(): ?Switchs
     {
-        return $this->switch;
+        return $this->switchs;
     }
 
-    public function setSwitch(?Switchs $switch): self
+    public function setSwitchs(?Switchs $switchs): self
     {
-        $this->switch = $switch;
+        $this->switchs = $switchs;
 
         return $this;
     }

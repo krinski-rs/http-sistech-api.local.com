@@ -100,4 +100,11 @@ App\Entity\Network\Switchs:
                 vlan_id:
                     referencedColumnName: id
             orphanRemoval: false
+    oneToMany:
+        switchPort:
+            targetEntity: App\Entity\Network\SwitchPort
+            cascade:
+                - all
+            fetch: LAZY
+            mappedBy: switchs
     lifecycleCallbacks: {  }

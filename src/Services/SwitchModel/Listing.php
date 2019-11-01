@@ -11,11 +11,11 @@ class Listing
         $this->objEntityManager = $objEntityManager;
     }
     
-    public function get(int $idSwitchModel)
+    public function get(int $id)
     {
         try {
             $objRepositorySwitchModel = $this->objEntityManager->getRepository('AppEntity:Network\SwitchModel');
-            $objSwitchModel = $objRepositorySwitchModel->find($idSwitchModel);
+            $objSwitchModel = $objRepositorySwitchModel->find($id);
             return $objSwitchModel;
         } catch (\RuntimeException $e){
             throw $e;

@@ -34,9 +34,13 @@ App\Entity\Network\SwitchModel:
             nullable: true
             column: removal_date
         brand:
-            type: string
+            type: network.marca_switch
             nullable: false
-            length: null
-            options:
-                fixed: false
+    oneToMany:
+        switchModelPort:
+            targetEntity: App\Entity\Network\SwitchModelPort
+            cascade:
+                - all
+            fetch: LAZY
+            mappedBy: switchModel
     lifecycleCallbacks: {  }

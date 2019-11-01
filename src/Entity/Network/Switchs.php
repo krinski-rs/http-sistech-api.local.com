@@ -2,6 +2,9 @@
 
 namespace App\Entity\Network;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 class Switchs
 {
     private $id;
@@ -22,11 +25,18 @@ class Switchs
 
     private $password;
 
+    private $switchPort;
+
     private $pop;
 
     private $switchModel;
 
     private $vlan;
+
+    public function __construct()
+    {
+        $this->switchPort = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -125,6 +135,37 @@ class Switchs
     public function setPassword(?string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SwitchPort[]
+     */
+    public function getSwitchPort(): Collection
+    {
+        return $this->switchPort;
+    }
+
+    public function addSwitchPort(SwitchPort $switchPort): self
+    {
+        if (!$this->switchPort->contains($switchPort)) {
+            $this->switchPort[] = $switchPort;
+            $switchPort->setSwitchs($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSwitchPort(SwitchPort $switchPort): self
+    {
+        if ($this->switchPort->contains($switchPort)) {
+            $this->switchPort->removeElement($switchPort);
+            // set the owning side to null (unless already changed)
+            if ($switchPort->getSwitchs() === $this) {
+                $switchPort->setSwitchs(null);
+            }
+        }
 
         return $this;
     }

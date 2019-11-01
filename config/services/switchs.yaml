@@ -1,0 +1,9 @@
+services:
+    services.switchs:
+          alias: App\Services\Switchs
+          public: true
+    App\Services\Switchs:
+          public: false
+          arguments: ["@doctrine", "@logger"]
+    App\Controller\Switchs\SwitchsController:
+        arguments: ['@services.switchs']

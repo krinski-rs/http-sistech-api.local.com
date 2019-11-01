@@ -13,13 +13,13 @@ get_switch_model_brand:
         _format: json
         
 get_switch_model:
-    path: /{idSwitchModel}
+    path: /{id}
     controller: 'App\Controller\SwitchModel\SwitchModelController::getSwitchModel'
-    methods: [GET]
+    methods: [GET,OPTIONS]
     defaults:
         _format: json
     requirements:
-        idSwitchModel: '\d+'
+        id: '\d+'
         
         
 list_switch_model:

@@ -8,6 +8,15 @@ parameters:
 doctrine:
     dbal:
         default_connection: default
+        types:
+            network.marca_switch:
+                class:                App\DBAL\Type\Enum\Network\MarcaSwitchType
+            network.status_vlan:
+                class:                App\DBAL\Type\Enum\Network\StatusVlanType
+            network.port_type:
+                class:                App\DBAL\Type\Enum\Network\PortTypeType
+            network.port_mode:
+                class:                App\DBAL\Type\Enum\Network\PortModeType
         connections:
             default:
                 driver:   '%env(resolve:DATABASE_DRIVER)%'
@@ -19,10 +28,10 @@ doctrine:
                 server_version: '%env(resolve:DATABASE_VERSION)%'
                 charset: '%env(resolve:DATABASE_CHARSET)%'
                 mapping_types:
-                    status_vlan: string
-                    marca_switch: string
-                    port_type: string
-                    port_mode: string
+                    status_vlan: network.status_vlan
+                    marca_switch: network.marca_switch
+                    port_type: network.port_type
+                    port_mode: network.port_mode
             authorize:
                 driver:   '%env(resolve:DATABASE_DRIVER)%'
                 host:     '%env(resolve:DATABASE_HOST)%'
@@ -44,10 +53,10 @@ doctrine:
                 schema_filter: '%env(resolve:NETWORK_SCHEMA)%'
                 charset: '%env(resolve:DATABASE_CHARSET)%'
                 mapping_types:
-                    status_vlan: string
-                    marca_switch: string
-                    port_type: string
-                    port_mode: string
+                    status_vlan: network.status_vlan
+                    marca_switch: network.marca_switch
+                    port_type: network.port_type
+                    port_mode: network.port_mode
     orm:
         default_entity_manager: default
         auto_generate_proxy_classes: '%kernel.debug%'
