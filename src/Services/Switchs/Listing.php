@@ -15,7 +15,7 @@ class Listing
     public function get(int $idSwitchs)
     {
         try {
-            $objRepositorySwitchs = $this->objEntityManager->getRepository('AppEntity:Redes\Switchs');
+            $objRepositorySwitchs = $this->objEntityManager->getRepository('AppEntity:Network\Switchs');
             $objSwitchs = $objRepositorySwitchs->find($idSwitchs);
             return $objSwitchs;
         } catch (\RuntimeException $e){
@@ -28,14 +28,14 @@ class Listing
     public function list(Request $objRequest)
     {
         try {
-            $objRepositorySwitchs = $this->objEntityManager->getRepository('AppEntity:Redes\Switchs');
+            $objRepositorySwitchs = $this->objEntityManager->getRepository('AppEntity:Network\Switchs');
             $criteria = [];
             $arraySwitchs = [];
             
             $objQueryBuilder = $objRepositorySwitchs->createQueryBuilder('swit');
             $objQueryBuilder->select('DISTINCT swit');
-            $objQueryBuilder->innerJoin('swit.port', 'port');
-            $objExprEq = $objQueryBuilder->expr()->isNull('swit.removedAt');
+            $objQueryBuilder->innerJoin('swit.switchPort', 'port');
+            $objExprEq = $objQueryBuilder->expr()->isNull('swit.removalDate');
             $objQueryBuilder->andWhere($objExprEq);
             
             if($objRequest->get('name', false)){
@@ -44,16 +44,16 @@ class Listing
                 $criteria['name'] = "%{$objRequest->get('name', null)}%";
             }
             
-            if($objRequest->get('active', false)){
-                $objExprEq = $objQueryBuilder->expr()->eq('swit.active', ':active');
+            if($objRequest->get('isActive', false)){
+                $objExprEq = $objQueryBuilder->expr()->eq('swit.isActive', ':isActive');
                 $objQueryBuilder->andWhere($objExprEq);
-                $criteria['active'] = $objRequest->get('active', null);
+                $criteria['isActive'] = $objRequest->get('isActive', null);
             }
             
-            if($objRequest->get('createdAt', false)){
-                $objExprEq = $objQueryBuilder->expr()->eq('swit.createdAt', ':createdAt');
+            if($objRequest->get('recordingDate', false)){
+                $objExprEq = $objQueryBuilder->expr()->eq('swit.recordingDate', ':recordingDate');
                 $objQueryBuilder->andWhere($objExprEq);
-                $criteria['createdAt'] = $objRequest->get('createdAt', null);
+                $criteria['recordingDate'] = $objRequest->get('recordingDate', null);
             }
             if($objRequest->get('id', false)){
                 $objExprEq = $objQueryBuilder->expr()->eq('swit.id', ':id');

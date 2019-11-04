@@ -24,6 +24,43 @@ class Switchs
         $this->objLogger = $objLogger;
     }
     
+    private function getDefaultContext()
+    {
+        return [
+            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+                if($object instanceof Vlan){
+                    return $object->getTagId();
+                }else{
+                    return $object->getName();
+                }
+            },
+            AbstractNormalizer::CALLBACKS => [
+                'recordingDate' => function ($dateTime) {
+                    return $dateTime instanceof \DateTime ? $dateTime->format(\DateTime::ISO8601) : '';
+                },
+                'removalDate' => function ($dateTime) {
+                    return $dateTime instanceof \DateTime ? $dateTime->format(\DateTime::ISO8601) : '';
+                },
+//                 'switchModelPort' => function ($objswitchModelPort) {
+//                     $retorno = [];
+//                     if(!$objswitchModelPort->count()){
+//                         return $retorno;
+//                     }
+//                     $objswitchModelPort->first();
+//                     while ($obj = $objswitchModelPort->current()){
+//                         $retorno[$obj->getPortType()] = [
+//                             'id' => $obj->getId(),
+//                             'portType' => $obj->getPortType(),
+//                             'quantities' => $obj->getQuantities()
+//                         ];
+//                         $objswitchModelPort->next();
+//                     }
+//                     return $retorno;
+//                 }
+            ],
+        ];
+    }
+    
     public function create(Request $objRequest)
     {
         try {
@@ -31,25 +68,8 @@ class Switchs
             $objTemplate = $objCreate
                 ->create($objRequest)
                 ->save();
-            $defaultContext = [
-                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                    if($object instanceof Vlan){
-                        return $object->getTagId();
-                    }else{
-                        return $object->getName();
-                    }
-                },
-                AbstractNormalizer::CALLBACKS => [
-                    'createdAt' => function ($dateTime) {
-                        return $dateTime instanceof \DateTime ? $dateTime->format(\DateTime::ISO8601) : '';
-                    },
-                    'removedAt' => function ($dateTime) {
-                        return $dateTime instanceof \DateTime ? $dateTime->format(\DateTime::ISO8601) : '';
-                    }
-                ],
-            ];
             
-            $objGetSetMethodNormalizer = new GetSetMethodNormalizer(NULL, NULL, NULL, NULL, NULL, $defaultContext);
+            $objGetSetMethodNormalizer = new GetSetMethodNormalizer(NULL, NULL, NULL, NULL, NULL, $this->getDefaultContext());
             $objSerializer = new Serializer([$objGetSetMethodNormalizer]);
             return $objSerializer->normalize($objTemplate);
         } catch (\RuntimeException $e){
@@ -59,35 +79,17 @@ class Switchs
         }
     }
     
-    public function get(int $idSwitch)
+    public function get(int $id)
     {
         try {
             $objListing = new Listing($this->objEntityManager);
-            $objSwitch = $objListing->get($idSwitch);
+            $objSwitch = $objListing->get($id);
             
             if(!($objSwitch instanceof EntitySwitchs)){
                 throw new NotFoundHttpException("Not Found");
             }
             
-            $defaultContext = [
-                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                    if($object instanceof Vlan){
-                        return $object->getTagId();
-                    }else{
-                        return $object->getName();
-                    }
-                },
-                AbstractNormalizer::CALLBACKS => [
-                    'createdAt' => function ($dateTime) {
-                        return $dateTime instanceof \DateTime ? $dateTime->format(\DateTime::ISO8601) : NULL;
-                    },
-                    'removedAt' => function ($dateTime) {
-                        return $dateTime instanceof \DateTime ? $dateTime->format(\DateTime::ISO8601) : NULL;
-                    },
-                ],
-            ];
-            
-            $objGetSetMethodNormalizer = new GetSetMethodNormalizer(NULL, NULL, NULL, NULL, NULL, $defaultContext);
+            $objGetSetMethodNormalizer = new GetSetMethodNormalizer(NULL, NULL, NULL, NULL, NULL, $this->getDefaultContext());
             $objSerializer = new Serializer([$objGetSetMethodNormalizer]);
             return $objSerializer->normalize($objSwitch);
         } catch (\RuntimeException $e){
@@ -109,25 +111,7 @@ class Switchs
             if($returnObj){
                 return $arraySwitch;
             }
-            
-            $defaultContext = [
-                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                    if($object instanceof Vlan){
-                        return $object->getTagId();
-                    }else{
-                        return $object->getName();
-                    }
-                },
-                AbstractNormalizer::CALLBACKS => [
-                    'createdAt' => function ($dateTime) {
-                        return $dateTime instanceof \DateTime ? $dateTime->format(\DateTime::ISO8601) : NULL;
-                    },
-                    'removedAt' => function ($dateTime) {
-                        return $dateTime instanceof \DateTime ? $dateTime->format(\DateTime::ISO8601) : NULL;
-                    },
-                ],
-            ];
-            $objGetSetMethodNormalizer = new GetSetMethodNormalizer(NULL, NULL, NULL, NULL, NULL, $defaultContext);
+            $objGetSetMethodNormalizer = new GetSetMethodNormalizer(NULL, NULL, NULL, NULL, NULL, $this->getDefaultContext());
             $objSerializer = new Serializer([$objGetSetMethodNormalizer]);
             return $objSerializer->normalize($arraySwitch);
         } catch (\RuntimeException $e){

@@ -29,13 +29,13 @@ class SwitchsController extends AbstractController
         }
     }
     
-    public function getSwitchs(Request $objRequest, int $idSwitchs)
+    public function getSwitchs(Request $objRequest, int $id)
     {
         try {
             if(!$this->objSwitchs instanceof Switchs){
                 return new JsonResponse(['message'=> 'Class "App\Services\Switchs not found."'], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
-            $objSwitchs = $this->objSwitchs->get($idSwitchs);
+            $objSwitchs = $this->objSwitchs->get($id);
             return new JsonResponse($objSwitchs, Response::HTTP_OK);
         } catch (NotFoundHttpException $e) {
             return new JsonResponse(NULL, Response::HTTP_NOT_FOUND);

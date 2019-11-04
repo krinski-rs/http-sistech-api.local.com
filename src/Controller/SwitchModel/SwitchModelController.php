@@ -6,7 +6,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Services\SwitchModel;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Monolog\Logger;
 class SwitchModelController extends AbstractController
 {    
     private $objSwitchModel = NULL;
