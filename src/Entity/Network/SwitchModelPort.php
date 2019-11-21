@@ -17,12 +17,12 @@ class SwitchModelPort
         return $this->id;
     }
 
-    public function getPortType(): ?string
+    public function getPortType()
     {
         return $this->portType;
     }
 
-    public function setPortType(string $portType): self
+    public function setPortType($portType): self
     {
         $this->portType = $portType;
 

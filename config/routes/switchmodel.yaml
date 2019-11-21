@@ -1,0 +1,57 @@
+post_switch_model:
+    path: /
+    controller: 'App\Controller\SwitchModel\SwitchModelController::postSwitchModel'
+    methods: [POST]
+    defaults:
+        _format: json
+        
+get_switch_model_brand:
+    path: /brand
+    controller: 'App\Controller\SwitchModel\SwitchModelController::getBrand'
+    methods: [GET,OPTIONS]
+    defaults:
+        _format: json
+        
+get_switch_model:
+    path: /{id}
+    controller: 'App\Controller\SwitchModel\SwitchModelController::getSwitchModel'
+    methods: [GET,OPTIONS]
+    defaults:
+        _format: json
+    requirements:
+        id: '\d+'
+        
+        
+list_switch_model:
+    path: /
+    controller: 'App\Controller\SwitchModel\SwitchModelController::getSwitchModels'
+    methods: [GET,OPTIONS]
+    defaults:
+        _format: json
+        
+delete_switch_model:
+    path: /{idSwitchModel}
+    controller: 'App\Controller\SwitchModel\SwitchModelController::deleteSwitchModel'
+    methods: [DELETE]
+    defaults:
+        _format: json
+    requirements:
+        idSwitchModel: '\d+'
+        
+put_switch_model:
+    path: /{idSwitchModel}
+    controller: 'App\Controller\SwitchModel\SwitchModelController::putSwitchModel'
+    methods: [PUT]
+    defaults:
+        _format: json
+    requirements:
+        idSwitchModel: '\d+'
+        
+patch_switch_model:
+    path: /{idSwitchModel}
+    controller: 'App\Controller\SwitchModel\SwitchModelController::patchSwitchModel'
+    methods: [PATCH]
+    defaults:
+        _format: json
+    requirements:
+        idSwitchModel: '\d+'

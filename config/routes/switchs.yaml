@@ -1,0 +1,49 @@
+post_switchs:
+    path: /
+    controller: 'App\Controller\Switchs\SwitchsController::postSwitchs'
+    methods: [POST,OPTIONS]
+    defaults:
+        _format: json
+        
+get_switchs:
+    path: /{id}
+    controller: 'App\Controller\Switchs\SwitchsController::getSwitchs'
+    methods: [GET,OPTIONS]
+    defaults:
+        _format: json
+    requirements:
+        id: '\d+'
+        
+list_switchs:
+    path: /
+    controller: 'App\Controller\Switchs\SwitchsController::getSwitchss'
+    methods: [GET,OPTIONS]
+    defaults:
+        _format: json
+        
+delete_switchs:
+    path: /{idSwitchs}
+    controller: 'App\Controller\Switchs\SwitchsController::deleteSwitchs'
+    methods: [DELETE,OPTIONS]
+    defaults:
+        _format: json
+    requirements:
+        idSwitchs: '\d+'
+        
+put_switchs:
+    path: /{idSwitchs}
+    controller: 'App\Controller\Switchs\SwitchsController::putSwitchs'
+    methods: [PUT,OPTIONS]
+    defaults:
+        _format: json
+    requirements:
+        idSwitchs: '\d+'
+        
+patch_switchs:
+    path: /{idSwitchs}
+    controller: 'App\Controller\Switchs\SwitchsController::patchSwitchs'
+    methods: [PATCH,OPTIONS]
+    defaults:
+        _format: json
+    requirements:
+        idSwitchs: '\d+'

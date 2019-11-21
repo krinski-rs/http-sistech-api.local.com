@@ -2,17 +2,20 @@
 
 namespace App\Entity\Network;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 class Switchs
 {
     private $id;
 
     private $name;
 
-    private $active;
+    private $isActive;
 
-    private $createdAt;
+    private $recordingDate;
 
-    private $removedAt;
+    private $removalDate;
 
     private $addressIpv4;
 
@@ -22,11 +25,18 @@ class Switchs
 
     private $password;
 
+    private $switchPort;
+
     private $pop;
 
     private $switchModel;
 
     private $vlan;
+
+    public function __construct()
+    {
+        $this->switchPort = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -45,38 +55,38 @@ class Switchs
         return $this;
     }
 
-    public function getActive(): ?bool
+    public function getIsActive(): ?bool
     {
-        return $this->active;
+        return $this->isActive;
     }
 
-    public function setActive(bool $active): self
+    public function setIsActive(bool $isActive): self
     {
-        $this->active = $active;
+        $this->isActive = $isActive;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getRecordingDate(): ?\DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->recordingDate;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setRecordingDate(\DateTimeInterface $recordingDate): self
     {
-        $this->createdAt = $createdAt;
+        $this->recordingDate = $recordingDate;
 
         return $this;
     }
 
-    public function getRemovedAt(): ?\DateTimeInterface
+    public function getRemovalDate(): ?\DateTimeInterface
     {
-        return $this->removedAt;
+        return $this->removalDate;
     }
 
-    public function setRemovedAt(?\DateTimeInterface $removedAt): self
+    public function setRemovalDate(?\DateTimeInterface $removalDate): self
     {
-        $this->removedAt = $removedAt;
+        $this->removalDate = $removalDate;
 
         return $this;
     }
@@ -125,6 +135,37 @@ class Switchs
     public function setPassword(?string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SwitchPort[]
+     */
+    public function getSwitchPort(): Collection
+    {
+        return $this->switchPort;
+    }
+
+    public function addSwitchPort(SwitchPort $switchPort): self
+    {
+        if (!$this->switchPort->contains($switchPort)) {
+            $this->switchPort[] = $switchPort;
+            $switchPort->setSwitchs($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSwitchPort(SwitchPort $switchPort): self
+    {
+        if ($this->switchPort->contains($switchPort)) {
+            $this->switchPort->removeElement($switchPort);
+            // set the owning side to null (unless already changed)
+            if ($switchPort->getSwitchs() === $this) {
+                $switchPort->setSwitchs(null);
+            }
+        }
 
         return $this;
     }

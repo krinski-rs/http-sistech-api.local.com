@@ -1,0 +1,49 @@
+post_service:
+    path: /
+    controller: 'App\Controller\Service\ServiceController::postService'
+    methods: [POST]
+    defaults:
+        _format: json
+        
+get_service:
+    path: /{idService}
+    controller: 'App\Controller\Service\ServiceController::getService'
+    methods: [GET]
+    defaults:
+        _format: json
+    requirements:
+        idService: '\d+'
+        
+list_service:
+    path: /
+    controller: 'App\Controller\Service\ServiceController::getServices'
+    methods: [GET,OPTIONS]
+    defaults:
+        _format: json
+        
+delete_service:
+    path: /{idService}
+    controller: 'App\Controller\Service\ServiceController::deleteService'
+    methods: [DELETE]
+    defaults:
+        _format: json
+    requirements:
+        idService: '\d+'
+        
+put_service:
+    path: /{idService}
+    controller: 'App\Controller\Service\ServiceController::putService'
+    methods: [PUT]
+    defaults:
+        _format: json
+    requirements:
+        idService: '\d+'
+        
+patch_service:
+    path: /{idService}
+    controller: 'App\Controller\Service\ServiceController::patchService'
+    methods: [PATCH]
+    defaults:
+        _format: json
+    requirements:
+        idService: '\d+'

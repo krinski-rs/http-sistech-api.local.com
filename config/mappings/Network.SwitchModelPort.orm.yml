@@ -16,11 +16,8 @@ App\Entity\Network\SwitchModelPort:
                 strategy: SEQUENCE
     fields:
         portType:
-            type: string
+            type: network.port_type
             nullable: false
-            length: null
-            options:
-                fixed: false
             column: port_type
         quantities:
             type: integer

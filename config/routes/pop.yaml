@@ -1,0 +1,50 @@
+post_pop:
+    path: /
+    controller: 'App\Controller\Pop\PopController::postPop'
+    methods: [POST]
+    defaults:
+        _format: json
+        
+get_pop:
+    path: /{idPop}
+    controller: 'App\Controller\Pop\PopController::getPop'
+    methods: [GET]
+    defaults:
+        _format: json
+    requirements:
+        idPop: '\d+'
+        
+        
+list_pop:
+    path: /
+    controller: 'App\Controller\Pop\PopController::getPops'
+    methods: [GET, OPTIONS]
+    defaults:
+        _format: json
+        
+delete_pop:
+    path: /{idPop}
+    controller: 'App\Controller\Pop\PopController::deletePop'
+    methods: [DELETE]
+    defaults:
+        _format: json
+    requirements:
+        idPop: '\d+'
+        
+put_pop:
+    path: /{idPop}
+    controller: 'App\Controller\Pop\PopController::putPop'
+    methods: [PUT]
+    defaults:
+        _format: json
+    requirements:
+        idPop: '\d+'
+        
+patch_pop:
+    path: /{idPop}
+    controller: 'App\Controller\Pop\PopController::patchPop'
+    methods: [PATCH]
+    defaults:
+        _format: json
+    requirements:
+        idPop: '\d+'
